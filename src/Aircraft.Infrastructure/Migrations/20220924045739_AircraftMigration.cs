@@ -49,6 +49,7 @@ namespace Aircraft.Infrastructure.Migrations
                     MaintenanceId = table.Column<Guid>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Type = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
                     Value = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false)
                 },

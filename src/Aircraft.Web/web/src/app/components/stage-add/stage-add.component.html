@@ -1,0 +1,75 @@
+
+
+
+
+  <mat-card class="authcard">
+    <div class="container">
+    <h1>Inserir etapa</h1>
+
+    <form [formGroup]="stageForm" (submit)="onSubmit()" autocomplete="off">
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput #input class="form-control" placeholder="Descrição" formControlName="description"
+            name="description" required />
+          <mat-error
+            *ngIf="stageForm.controls.description.invalid && (this.isSubmitted || stageForm.controls.description.dirty || stageForm.controls.description.touched)">
+            description é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <mat-label>Tipo do valor</mat-label>
+          <mat-select matNativeControl formControlName="type" required>
+            <mat-option value="0">Texto</mat-option>
+            <mat-option value="1">Número</mat-option>
+            <mat-option value="2">Arquivo</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <div *ngIf="this.stageForm.value.type == 0">
+          <mat-form-field color="accent">
+            <input matInput type #input class="form-control" placeholder="Valor" formControlName="value" name="value"
+              required />
+            <mat-error>
+              *ngIf="stageForm.controls.value.invalid && (this.isSubmitted || stageForm.controls.value.dirty ||
+              stageForm.controls.value.touched)">
+              Descrição é obrigatório</mat-error>
+          </mat-form-field>
+        </div>
+        <div *ngIf="this.stageForm.value.type == 1">
+          <mat-form-field color="accent">
+            <input matInput type="number" #input class="form-control" placeholder="value" formControlName="value"
+              name="value" required />
+            <mat-error
+              *ngIf="stageForm.controls.value.invalid && (this.isSubmitted || stageForm.controls.value.dirty || stageForm.controls.value.touched)">
+              Valor é obrigatório</mat-error>
+          </mat-form-field>
+        </div>
+        <div *ngIf="this.stageForm.value.type == 2">
+          <button type="button" class="file" mat-raised-button (click)="fileInput.click()">Escolha um arquivo</button>
+          <input hidden accept="image/*,.pdf" (change)="fileChangeEvent($event)" #fileInput type="file" id="file">
+        </div>
+      </div>
+      <button mat-raised-button color="primary">Enviar</button>
+    </form>
+  </div>
+  </mat-card>
+
+  <div *ngIf="this.stages !== undefined && this.stages.length > 0 ">
+
+    <mat-card>
+      <mat-card-title>Etapas a inserir</mat-card-title>
+      <ul *ngFor="let stage of stages">
+        <li> {{stage.description}} - {{stage.type == 2 ? "Arquivo" : stage.value}} </li>
+      </ul>
+      <button mat-raised-button color="primary" type="button" (click)="AddStage()">Inserir etapas</button>
+    </mat-card>
+  </div>
+
+
+<button mat-raised-button color="primary" class="back" style="margin:auto; float:right; margin-top:8px;" type="button"
+  (click)="redirectToMain()">Voltar</button>

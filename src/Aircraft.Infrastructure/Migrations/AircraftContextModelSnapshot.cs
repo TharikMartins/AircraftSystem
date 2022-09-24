@@ -59,6 +59,9 @@ namespace Aircraft.Infrastructure.Migrations
                     b.Property<Guid>("MaintenanceId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 

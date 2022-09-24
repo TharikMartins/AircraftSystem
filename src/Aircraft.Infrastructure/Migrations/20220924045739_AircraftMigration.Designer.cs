@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aircraft.Infrastructure.Migrations
 {
     [DbContext(typeof(AircraftContext))]
-    [Migration("20220923025816_AircraftMigration")]
+    [Migration("20220924045739_AircraftMigration")]
     partial class AircraftMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,9 @@ namespace Aircraft.Infrastructure.Migrations
 
                     b.Property<Guid>("MaintenanceId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");

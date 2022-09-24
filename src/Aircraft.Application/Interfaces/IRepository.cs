@@ -8,5 +8,7 @@ namespace Aircraft.Application.Interfaces
     {
         Task<IEnumerable<T>> Get(Guid Id);
         Task<bool> Insert(T Model);
+
+        Task<bool> Update(Guid Id);
     }
 }

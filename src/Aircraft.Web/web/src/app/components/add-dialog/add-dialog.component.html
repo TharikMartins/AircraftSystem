@@ -1,0 +1,18 @@
+<div class="container">
+    <h3 mat-dialog-title class="title">Adicionar nova manuntenção</h3>
+  
+    <form class="mat-dialog-content" #formControl="ngForm">
+      <div class="form">
+        <mat-form-field color="accent">
+          <textarea matInput #input class="form-control" placeholder="Descrição" [(ngModel)]="data.description" name="description" required ></textarea>
+          <mat-error *ngIf="formControl.invalid">Digitar uma descrição</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div mat-dialog-actions class="container-button">
+        <button mat-button type="submit" color="warn" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Salvar</button>
+        <button mat-button  color="primary" (click)="cancelClick()" tabindex="-1">Cancelar</button>
+      </div>
+    </form>
+  </div>
+  

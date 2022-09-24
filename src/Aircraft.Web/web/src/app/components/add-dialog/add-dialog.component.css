@@ -1,0 +1,17 @@
+.container {
+    width: 500px;
+    text-align: center;
+    height: 266px;
+}
+
+
+.container-button.mat-dialog-actions{ 
+    margin-top: 31px;
+    justify-content: center;
+}
+
+.title.mat-dialog-title
+{
+    margin-bottom: 35px;
+    font-size:20px;
+}

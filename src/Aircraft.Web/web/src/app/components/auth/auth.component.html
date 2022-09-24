@@ -1,0 +1,24 @@
+<mat-card class="authcard">
+  <h1>Sign in</h1>
+
+  <form [formGroup]="authForm" (submit)="onSubmit()" autocomplete="off">
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="Login" formControlName="login" name="login" required />
+        <mat-error
+          *ngIf="authForm.controls.login.invalid && (this.isSubmitted || authForm.controls.login.dirty || authForm.controls.login.touched)">
+          Login é obrigatório</mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input type="password" matInput #input class="form-control" placeholder="password" formControlName="password"
+          name="password" required />
+        <mat-error *ngIf="authForm.controls.password.errors?.required">The password is required</mat-error>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary">Enviar</button>
+  </form>
+</mat-card>

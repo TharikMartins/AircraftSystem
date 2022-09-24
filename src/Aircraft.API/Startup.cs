@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aircraft.CrossCutting;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,15 @@ namespace Aircraft.API
             services.AddControllers()
               .AddNewtonsoftJson(x =>
                     x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            
+
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:4200")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials();
+            }));
+
             services.AddSwaggerGen();
         }
 
@@ -58,6 +67,8 @@ namespace Aircraft.API
             app.UseSwagger();
 
             app.UseSwaggerUI();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

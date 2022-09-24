@@ -1,5 +1,10 @@
 using Aircraft.API.Request;
+using Aircraft.API.Response;
+using Aircraft.Application.Interfaces;
+using Aircraft.Domain;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Aircraft.API.Controllers
 {
@@ -7,15 +12,27 @@ namespace Aircraft.API.Controllers
     [Route("[controller]")]
     public class AuthenticationController : Controller
     {
-        public AuthenticationController()
-        {
+        private readonly IUserService _service;
+        private readonly IAuthService _authService;
 
+        public AuthenticationController(IUserService service, IAuthService authService)
+        {
+            _service = service;
+            _authService = authService;
         }
 
         [HttpPost]
-        public IActionResult Post(UserRequest request)
+        public async Task<ActionResult<AuthenticationResponse>> Post(UserRequest request)
         {
-            return Ok();
+
+            if (request == null || string.IsNullOrWhiteSpace(request.Login) || string.IsNullOrWhiteSpace(request.Password))
+                return BadRequest("Invalid Credentials");
+
+            UserProfile user = await _service.GetByLoginCredentials(request.Login, request.Password);
+
+            string token = _authService.GenerateToken(user);
+
+            return Ok(new AuthenticationResponse(user.Id, token));
         }
     }
 }

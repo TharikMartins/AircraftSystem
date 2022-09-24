@@ -1,21 +1,35 @@
 ﻿using Aircraft.Application.Interfaces;
 using Aircraft.Domain;
+using Aircraft.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Aircraft.Infrastructure.Repositories
 {
-    public class UserRepository : IRepository<UserProfile>
+    public class UserRepository : IUserRepository
     {
-        public Task<IEnumerable<UserProfile>> Get(Guid Id)
+        private readonly AircraftContext _context;
+
+        public UserRepository(AircraftContext context)
         {
-            throw new System.NotImplementedException();
+            _context = context;
         }
 
-        public Task<bool> Insert(UserProfile Model)
+        public async Task<UserProfile> GetByLoginCredentials(string login, string password)
         {
-            throw new System.NotImplementedException();
+            return await _context.Users.
+                FirstOrDefaultAsync(u => u.Login == login && u.Password == password);
+        }
+
+        public async Task<Guid> Insert(UserProfile model)
+        {
+            await _context.Users
+                .AddAsync(model);
+
+            await _context.SaveChangesAsync();
+
+            return model.Id;
         }
     }
 }

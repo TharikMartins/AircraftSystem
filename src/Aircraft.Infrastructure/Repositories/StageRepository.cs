@@ -32,5 +32,18 @@ namespace Aircraft.Infrastructure.Repositories
 
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<bool> Update(Guid id)
+        {
+            var model = _context.Stages
+                .FirstOrDefault(s => s.Id == id);
+
+            if (model == null)
+                return false;
+
+            _context.Stages.Update(model);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

@@ -14,8 +14,7 @@ namespace Aircraft.CrossCutting
     {
         public static IServiceCollection AddRepository(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddScoped<IRepository<UserProfile>, UserRepository>()
-                .AddScoped<IRepository<UserProfile>, UserRepository>()
+            return services.AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IRepository<Maintenance>, MaintenanceRepository>()
                 .AddScoped<IRepository<Stage>, StageRepository>()
                 .AddDbContext<AircraftContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
@@ -24,7 +23,9 @@ namespace Aircraft.CrossCutting
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             return services.AddTransient<IMaintenanceService, MaintenanceService>()
-                .AddTransient<IStageService, StageService>();
+                .AddTransient<IStageService, StageService>()
+                .AddTransient<IUserService, UserService>()
+                .AddTransient<IAuthService, AuthService>();
         }
 
     }

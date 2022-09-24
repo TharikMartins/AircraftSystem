@@ -12,6 +12,7 @@ namespace Aircraft.API.Mapper
             CreateMap<Maintenance, MaintenanceResponse>();
             CreateMap<MaintenanceRequest, Maintenance>();
             CreateMap<StageRequest, Stage>();
+            CreateMap<Stage, StageResponse>();
         }
     }
 }

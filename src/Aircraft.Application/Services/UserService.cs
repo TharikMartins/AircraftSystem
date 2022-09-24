@@ -1,23 +1,30 @@
- using Microsoft.IdentityModel.Tokens;
- using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Aircraft.Application.Interfaces;
+using Aircraft.Domain;
+using System.Threading.Tasks;
 
 namespace Aircraft.Application.Services
 {
 
-    public class UserService 
+    public class UserService : IUserService
     {
-
-        public void CreateToken(string login, string password)
+        private readonly IUserRepository _repository;
+        public UserService(IUserRepository repository)
         {
-            var claims = new Claim[1]
-            {
-                new Claim(login, password)
-            };
+            _repository = repository;
+        }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("teste"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        public async Task<UserProfile> GetByLoginCredentials(string login, string password)
+        {
+            UserProfile user = await _repository.GetByLoginCredentials(login, password);
+
+            if (user != null)
+                return user;
+
+            UserProfile userProfile = new UserProfile { Login = login, Password = password };
+
+            userProfile.Id = await _repository.Insert(userProfile);
+
+            return userProfile;
         }
 
     }
