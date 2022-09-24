@@ -1,5 +1,3 @@
-
-
 namespace Aircraft.API.Request
 {
     public class UserRequest

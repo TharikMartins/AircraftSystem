@@ -23,6 +23,12 @@ namespace Aircraft.API.Controllers
             _mapper = mapper;
         }
 
+
+        /// <summary>
+        /// Insert Maintenance in the system.
+        /// </summary>
+        /// <param name="request">MaintenanceRequest</param>
+        /// <returns>bool</returns>
         [HttpPost]
         public async Task<ActionResult<bool>> Post(MaintenanceRequest request)
         {
@@ -30,6 +36,11 @@ namespace Aircraft.API.Controllers
             return Ok(new TransactionResponse(response));
         }
 
+        /// <summary>
+        /// Return a list of maintenance.
+        /// </summary>
+        /// <param name="userId">userId guid</param>
+        /// <returns>MaintenanceResponse</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MaintenanceResponse>>> Get(Guid userId)
         {

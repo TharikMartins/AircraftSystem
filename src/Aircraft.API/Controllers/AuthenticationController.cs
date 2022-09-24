@@ -21,6 +21,11 @@ namespace Aircraft.API.Controllers
             _authService = authService;
         }
 
+        /// <summary>
+        /// Inserting user and creating JWT Token
+        /// </summary>
+        /// <param name="request">UserRequest</param>
+        /// <returns>AuthenticationResponse</returns>
         [HttpPost]
         public async Task<ActionResult<AuthenticationResponse>> Post(UserRequest request)
         {
